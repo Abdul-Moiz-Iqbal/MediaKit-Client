@@ -4,7 +4,7 @@ const router = express.Router();
 
 const authController = require('../controller/auth')
 
-router.post('/sign-up',authController.singUp)
+router.post('/sign-up',authController.signUp)
 router.post('/sign-in',authController.signIn)
 
 // get books from db

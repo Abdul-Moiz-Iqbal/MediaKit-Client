@@ -1,9 +1,16 @@
-import React from 'react'
+import React from "react";
+import { Button } from "flowbite-react";
 
-const Button = ({style, text}) => {
+const ButtonUi = ({ style, text, onclick, disabled }) => {
   return (
-    <div className={`w-fit py-2 px-7 text-primary border rounded-full border-primary ${style}`}  >{text}</div>
-  )
-}
+    <div
+      onClick={onclick}
+      disabled={disabled}
+      className={`w-fit py-2 px-7 text-primary border rounded-full border-primary ${style}`}
+    >
+      {text} 
+    </div>
+  );
+};
 
-export default Button
+export default ButtonUi;

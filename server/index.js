@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cookieParser = require('cookie-parser')
-
+const cors = require('cors')
 //routes
 const authRoutes = require('./routes/auth')
 const editProfileRoutes = require('./routes/editProfile')
@@ -25,6 +25,10 @@ const MONGO_URL = process.env.MONGO_URL;
 app.use(express.json());
 
 //Other middle wares
+app.use(cors({
+  origin:'http://localhost:3000',
+  credentials: true 
+}))
 app.use(cookieParser())
 
 // app.use((req,res,next) =>{
@@ -33,7 +37,9 @@ app.use(cookieParser())
 
 // Connect to MongoDB using Mongoose
 mongoose
-  .connect(MONGO_URL)
+  .connect(MONGO_URL,
+    {serverSelectionTimeoutMS: 30000} // 30 seconds
+  )
   .then(() => {
     console.log("Connected to MongoDB");
   })
@@ -53,3 +59,4 @@ app.use(youtube)
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
