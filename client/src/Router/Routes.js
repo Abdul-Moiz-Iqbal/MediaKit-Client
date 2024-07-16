@@ -1,12 +1,12 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import Home from "../pages/Home";
-// import DashBoard from "../pages/DashBoard";
-// import JobDescription from "../pages/JobDescription";
-// import SignUp from "../pages/SignUp";
 import Login from "../pages/auth/Login";
 import SignUp from "../pages/auth/SignUp";
 import CreateMediaKit from "../pages/CreateMediaKit";
+import DashBoard from "../pages/DashBoard";
+import ProtectedRoutes from "../utils/ProtectedRoutes";
+import AuthRoutes from "../utils/AuthRoutes"
 
 const Routes = createBrowserRouter([
   {
@@ -14,29 +14,40 @@ const Routes = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: "/",
-        element: <CreateMediaKit />,
-      },
-      {path:'/Home',
-        element:<Home/>
+        element:<AuthRoutes/>,
+        children:[
+          ,
+          {
+            path: "/login",
+            element: <Login />,
+          },
+          {
+            path: "/signup",
+            element: <SignUp />,
+          }
+        ]    
       }
-      ,
+     ,
+      { 
+        path: "/", 
+        element: <Home /> },
       {
-        path: "/login",
-        element: <Login/>,
+        element: <ProtectedRoutes />,
+        children: [
+          {
+            path: "/dashboard",
+            element: <DashBoard />,
+          },
+          {
+            path: "/mediaKits",
+            element: <CreateMediaKit />,
+          },
+        ],
       },
-      {
-        path: "/signup",
-        element: <SignUp />,
-      },
-    //   {
-    //     path: "/JobDescription",
-    //     element: <JobDescription />,
-    //   },
-      
+
+     
     ],
   },
- 
 ]);
 
 export default Routes;

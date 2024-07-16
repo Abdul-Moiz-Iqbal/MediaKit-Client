@@ -13,3 +13,46 @@ code {
   font-family: Poppins, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  background: #FC076F; /* Thumb color */
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: #fef2f3;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
+}
+
+/* Custom scrollbar track */
+::-webkit-scrollbar {
+  width: 2px; /* Adjust width for the vertical scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #111c2e; /* Track color */
+  border-radius: 8px; /* Rounded corners */
+  margin: 10px 0; /* Space between the track and container edges */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #FC076F; /* Thumb color */
+  border-radius: 8px; /* Rounded corners */
+  border: 3px solid #111c2e; /* Padding around the thumb */
+}
+
+/* For Firefox */
+* {
+  scrollbar-width:thin; /* Thin scrollbar */
+  scrollbar-color: #FC076F #111c2e; /* Thumb and track color */
+}

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { GoGear } from "react-icons/go";
 import { BiUser } from "react-icons/bi";
 import { AiOutlineLogout } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 const DropdownMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -33,18 +34,24 @@ const DropdownMenu = () => {
               <span className="ml-[10px] font-semibold">moiz iqbal</span>
             </div>
           </div>
+          <Link to={'/settings'}>
           <div className="p-[20px] flex  items-center  text-sm text-gray-700 cursor-pointer hover:bg-[#bfe0e2]">
             <GoGear className="text-lg font-bold "/>
             <span className=" ml-[10px] font-semibold">Settings</span>
           </div>
+          </Link>
+          <Link to={'/'}>
           <div className="p-[20px] flex  items-center  text-sm text-gray-700 cursor-pointer hover:bg-[#bfe0e2]">
           <BiUser className="text-lg font-bold "/>
             <span className=" ml-[10px] font-semibold">My MediaKits</span>
           </div>
+          </Link>
+          <Link>
           <div className="p-[20px] flex  items-center  text-sm text-gray-700 cursor-pointer hover:bg-[#bfe0e2]">
             <GoGear className="text-lg font-bold "/>
             <span className=" ml-[10px] font-semibold">Logout</span>
           </div>
+          </Link>
           
         </div>
       )}

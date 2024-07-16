@@ -7,10 +7,11 @@ const cookieParser = require("cookie-parser");
 const User = require("../models/user");
 
 exports.signUp = async (req, res) => {
+  
   try {
     const { firstName, lastName, email, password } = req.body;
 
-    // Check if all fields are provided
+    // Check if all fields are provided  
     if (!firstName || !lastName || !email || !password) {
       return res.status(400).json({ message: "Please fill all the Fields" });
     }
@@ -41,25 +42,23 @@ exports.signUp = async (req, res) => {
     );
 
     newUser.token = token;
-
+    await newUser.save();
     // Exclude the password from the response
     newUser.password = undefined;
 
-    const options = {
-      maxAge: 2 * 24 * 60 * 60 * 1000, // 2 days
-      httpOnly: true,
-    };
+ 
 
-    res.cookie('tokens', token, {
+    res.cookie('token', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production', // Please ensure cookies are only sent over HTTPS in production
-      sameSite: 'strict',
+      // secure: process.env.NODE_ENV === 'production', // Please ensure cookies are only sent over HTTPS in production
+      secure: false, // Please ensure cookies are only sent over HTTPS in production
+      sameSite: 'lax',
       maxAge: 2 * 24 * 60 * 60 * 1000, // 2 days
-      // maxAge:   1000, //
-    });
+      domain: 'localhost', // For local development
+      path: '/' // Makes the cookie available for all paths under the domain
+  });
 
     res.status(200)
-      .cookie("token", token, options)
       .json({ success: true, token, newUser });
   } catch (err) {
     console.log("Error in SignUp:", err);
@@ -68,6 +67,7 @@ exports.signUp = async (req, res) => {
 };
 
 exports.signIn = async (req, res) => {
+  
   try {
     const { email, password } = req.body;
 
@@ -87,15 +87,20 @@ exports.signIn = async (req, res) => {
         expiresIn: "2d",
       });
       user.token = token;
+      await user.save();
       user.password = undefined;
 
       //cookies
-      const options = {
-        maxAge: 2 * 24 * 60 * 60 * 1000, // 1 day in milliseconds // days * hours * mins * secs * miliSecs
+      res.cookie('token', token, {
         httpOnly: true,
-      };
-      
-      res.status(200).cookie("token", token, options).json({
+        // secure: process.env.NODE_ENV === 'production', // Please ensure cookies are only sent over HTTPS in production
+        secure: false, // Please ensure cookies are only sent over HTTPS in production
+        sameSite: 'lax',
+        maxAge: 2 * 24 * 60 * 60 * 1000, // 2 days
+        domain: 'localhost', // For local development
+        path: '/' // Makes the cookie available for all paths under the domain
+    });
+      res.status(200).json({
         sucess: true,
         token,
         user,
@@ -106,3 +111,4 @@ exports.signIn = async (req, res) => {
     res.send("err in Sign in");
   }
 };
+
